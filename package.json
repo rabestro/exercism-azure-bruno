@@ -1,0 +1,23 @@
+{
+  "name": "exercism-azure-bruno",
+  "version": "1.0.0",
+  "description": "Bruno API tests for Azure functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "bru run --env azure --format junit --output report.xml"
+  },
+  "keywords": [
+    "bruno",
+    "api",
+    "tests",
+    "exercism"
+  ],
+  "author": "Jegors Čemisovs. <jegors_cemisovs@epam.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@usebruno/cli": "^1.11.0",
+    "xml2js": "^0.6.2",
+    "xmldom": "^0.6.0",
+    "xpath": "^0.0.34"
+  }
+}
