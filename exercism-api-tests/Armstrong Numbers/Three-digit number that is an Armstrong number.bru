@@ -1,0 +1,19 @@
+meta {
+  name: Three-digit number that is an Armstrong number
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{host}}/api/armstrong-numbers?number=153
+  body: none
+  auth: none
+}
+
+query {
+  number: 153
+}
+
+assert {
+  res.body.isArmstrongNumber: isTruthy
+}

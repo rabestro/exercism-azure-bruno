@@ -1,0 +1,19 @@
+meta {
+  name: Four-digit number that is not an Armstrong number
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{host}}/api/armstrong-numbers?number=9475
+  body: none
+  auth: none
+}
+
+query {
+  number: 9475
+}
+
+assert {
+  res.body.isArmstrongNumber: isFalsy
+}
