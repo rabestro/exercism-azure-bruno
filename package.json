@@ -4,7 +4,7 @@
   "description": "Bruno API tests for Azure functions",
   "main": "index.js",
   "scripts": {
-    "test": "bru run --env azure --format junit --output report.xml"
+    "test": "cd exercism-api-tests && bru run --env azure --format junit --output ../report.xml"
   },
   "keywords": [
     "bruno",
