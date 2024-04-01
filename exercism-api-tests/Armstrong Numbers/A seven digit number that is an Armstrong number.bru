@@ -1,0 +1,19 @@
+meta {
+  name: A seven digit number that is an Armstrong number
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{host}}/api/armstrong-numbers?number=9926315
+  body: none
+  auth: none
+}
+
+query {
+  number: 9926315
+}
+
+assert {
+  res.body.isArmstrongNumber: isTruthy 
+}
