@@ -1,11 +1,11 @@
 meta {
-  name: A seven digit number that is an Armstrong number
+  name: A seven digit number that is not an Armstrong number
   type: http
-  seq: 4
+  seq: 9
 }
 
 get {
-  url: {{host}}/api/armstrong-numbers?number=9926315
+  url: {{host}}/api/armstrong-numbers?number=9926314
   body: none
   auth: none
 }
@@ -15,5 +15,5 @@ query {
 }
 
 assert {
-  res.body.isArmstrongNumber: isTruthy 
+  res.body.isArmstrongNumber: isFalsy
 }
