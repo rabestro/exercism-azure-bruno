@@ -1,0 +1,17 @@
+meta {
+  name: Error when number is not specified
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{host}}/api/armstrong-numbers
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 400
+  res.body.message: isDefined
+  res.body.message: contains pass a number
+}
