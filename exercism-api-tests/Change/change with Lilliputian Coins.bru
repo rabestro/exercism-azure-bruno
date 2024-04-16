@@ -1,0 +1,44 @@
+meta {
+  name: change with Lilliputian Coins
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 4, 15, 20, 50],
+    "target": 23
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined
+  res.body.fewestCoins: length 3
+  res.body.fewestCoins: contains 4
+  res.body.fewestCoins: contains 15
+}
+
+docs {
+  ### Change with Lilliputian Coins Test Case
+
+  This test case verifies the functionality of the change-making algorithm with a scenario involving **Lilliputian coins**.
+
+  - **Input**: A list of coins `[1, 4, 15, 20, 50]` and a target amount of `23`.
+  - **Expected Output**: An array containing three coins of values `4`, `4`, and `15`, which is the fewest number of coins that sum up to the target amount.
+
+  The assertions in this test ensure that:
+
+  - The API response status is `200`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'fewestCoins' array in the response body is defined, has a length of `3`, and contains the coins of values `4` and `15`.
+}

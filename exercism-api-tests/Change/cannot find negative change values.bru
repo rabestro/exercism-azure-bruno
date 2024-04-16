@@ -1,0 +1,42 @@
+meta {
+  name: cannot find negative change values
+  type: http
+  seq: 13
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 2, 5],
+    "target": -5
+  }
+}
+
+assert {
+  res.status: eq 400
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.error: isDefined
+  res.body.error: eq Negative change not allowed
+}
+
+docs {
+  ### Cannot Find Negative Change Values Test Case
+  
+  This test case verifies the functionality of the change-making algorithm with a scenario where **the target is negative**.
+  
+  - **Input**: A list of coins `[1, 2, 5]` and a target amount of `-5`.
+  - **Expected Output**: An error message stating "target can't be negative".
+  
+  The assertions in this test ensure that:
+  
+  - The API response status is `400`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'error' field in the response body is defined and equals "target can't be negative".
+}
