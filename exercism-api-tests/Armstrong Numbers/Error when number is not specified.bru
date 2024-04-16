@@ -12,6 +12,8 @@ get {
 
 assert {
   res.status: eq 400
+  res.headers['content-type']: contains application/json
+  res.body: isJson
   res.body.message: isDefined
   res.body.message: contains pass a number
 }

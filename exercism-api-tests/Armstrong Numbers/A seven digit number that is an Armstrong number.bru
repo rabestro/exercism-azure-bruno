@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{host}}/api/armstrong-numbers?number=9926315
+  url: {{host}}/api/armstrong-numbers/9926315
   body: none
   auth: none
 }
@@ -15,5 +15,9 @@ query {
 }
 
 assert {
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
   res.body.isArmstrongNumber: isTruthy
 }

@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{host}}/api/armstrong-numbers?number=0
+  url: {{host}}/api/armstrong-numbers/0
   body: none
   auth: none
 }
@@ -15,5 +15,8 @@ query {
 }
 
 assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
   res.body.isArmstrongNumber: isTruthy
 }
