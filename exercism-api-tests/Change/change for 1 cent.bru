@@ -1,0 +1,61 @@
+meta {
+  name: change for 1 cent
+  type: http
+  seq: 0
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 5, 10, 25],
+    "target": 1
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined
+  res.body.fewestCoins: length 1
+  res.body.fewestCoins: contains 1
+}
+
+tests {
+  test("Response status code is 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("Response has the required Content-Type header with value application/json", function() {
+    expect(res.getHeaders().get("Content-Type")).to.include("application/json");
+  });
+  
+  test("Validate the structure of the fewestCoins array", function() {
+    const data = res.getBody();
+    
+    expect(data).to.be.an('object');
+    expect(data.fewestCoins).to.be.an('array');
+  });
+  
+  test("FewestCoins array is present and contains at least one element", function() {
+    const data = res.getBody();
+    
+    expect(data).to.be.an('object');
+    expect(data.fewestCoins).to.exist.and.to.be.an('array').that.is.not.empty;
+  });
+  
+  test("Ensure that the value within the 'fewestCoins' array is a non-negative integer", function() {
+    const data = res.getBody();
+    
+    expect(data).to.be.an('object');
+    expect(data.fewestCoins).to.be.an('array');
+    data.fewestCoins.forEach(function (coin) {
+      expect(coin).to.be.a('number').and.to.satisfy((num) => num >= 0);
+    });
+  });
+}

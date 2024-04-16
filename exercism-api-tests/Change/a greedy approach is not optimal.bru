@@ -1,0 +1,43 @@
+meta {
+  name: a greedy approach is not optimal
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 10, 11],
+    "target": 20
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined
+  res.body.fewestCoins: length 2
+  res.body.fewestCoins: contains 10
+}
+
+docs {
+  ### A Greedy Approach is Not Optimal Test Case
+
+  This test case verifies the functionality of the change-making algorithm with a scenario where **a greedy approach is not optimal**.
+
+  - **Input**: A list of coins `[1, 10, 11]` and a target amount of `20`.
+  - **Expected Output**: An array containing two coins of value `10`, which is the fewest number of coins that sum up to the target amount.
+
+  The assertions in this test ensure that:
+
+  - The API response status is `200`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'fewestCoins' array in the response body is defined, has a length of `2`, and contains the coin of value `10`.
+}

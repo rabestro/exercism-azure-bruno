@@ -1,0 +1,42 @@
+meta {
+  name: error testing for change smaller than the smallest of coins
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [5, 10],
+    "target": 3
+  }
+}
+
+assert {
+  res.status: eq 400
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.error: isDefined
+  res.body.error: eq "can't make target with given coins"
+}
+
+docs {
+  ### Error Testing for Change Smaller Than the Smallest of Coins Test Case
+  
+  This test case verifies the functionality of the change-making algorithm with a scenario where **the target is smaller than the smallest of coins**.
+  
+  - **Input**: A list of coins `[5, 10]` and a target amount of `3`.
+  - **Expected Output**: An error message stating "can't make target with given coins".
+  
+  The assertions in this test ensure that:
+  
+  - The API response status is `400`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'error' field in the response body is defined and equals "can't make target with given coins".
+}

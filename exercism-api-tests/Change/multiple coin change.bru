@@ -1,0 +1,44 @@
+meta {
+  name: multiple coin change
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 5, 10, 25, 100],
+    "target": 15
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined
+  res.body.fewestCoins: length 2
+  res.body.fewestCoins: contains 5
+  res.body.fewestCoins: contains 10
+}
+
+docs {
+  ### Multiple Coin Change Test Case
+
+  This test case verifies the functionality of the change-making algorithm with a **multiple coin change** scenario.
+
+  - **Input**: A list of coins `[1, 5, 10, 25, 100]` and a target amount of `15`.
+  - **Expected Output**: An array containing two coins of values `5` and `10`, which is the fewest number of coins that sum up to the target amount.
+
+  The assertions in this test ensure that:
+
+  - The API response status is `200`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'fewestCoins' array in the response body is defined, has a length of `2`, and contains the coins of values `5` and `10`.
+}

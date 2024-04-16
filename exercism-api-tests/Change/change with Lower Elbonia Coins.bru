@@ -1,0 +1,43 @@
+meta {
+  name: change with Lower Elbonia Coins
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 5, 10, 21, 25],
+    "target": 63
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined
+  res.body.fewestCoins: length 3
+  res.body.fewestCoins: contains 21
+}
+
+docs {
+  ### Change with Lower Elbonia Coins Test Case
+
+  This test case verifies the functionality of the change-making algorithm with a scenario involving **Lower Elbonia coins**.
+
+  - **Input**: A list of coins `[1, 5, 10, 21, 25]` and a target amount of `63`.
+  - **Expected Output**: An array containing three coins of value `21`, which is the fewest number of coins that sum up to the target amount.
+
+  The assertions in this test ensure that:
+
+  - The API response status is `200`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'fewestCoins' array in the response body is defined, has a length of `3`, and contains the coin of value `21`.
+}

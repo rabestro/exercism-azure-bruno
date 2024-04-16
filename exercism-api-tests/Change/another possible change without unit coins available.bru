@@ -1,0 +1,44 @@
+meta {
+  name: another possible change without unit coins available
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [4, 5],
+    "target": 27
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined 
+  res.body.fewestCoins: length 6
+  res.body.fewestCoins: contains 4
+  res.body.fewestCoins: contains 5
+}
+
+docs {
+  ### Another Possible Change Without Unit Coins Available Test Case
+
+  This test case verifies the functionality of the change-making algorithm with another scenario where **unit coins are not available**. 
+
+  - **Input**: A list of coins `[4, 5]` and a target amount of `27`. 
+  - **Expected Output**: An array containing six coins of values `4`, `4`, `4`, `5`, `5`, `5`, which is the fewest number of coins that sum up to the target amount. 
+
+  The assertions in this test ensure that:
+
+  - The API response status is `200`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'fewestCoins' array in the response body is defined, has a length of `6`, and contains the coins of values `4` and `5`.
+}

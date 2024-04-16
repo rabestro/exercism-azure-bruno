@@ -1,0 +1,47 @@
+meta {
+  name: large target values
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{host}}/api/change
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "coins": [1, 2, 5, 10, 20, 50, 100],
+    "target": 999
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.headers['content-type']: contains application/json
+  res.body: isJson
+  res.body.fewestCoins: isDefined
+  res.body.fewestCoins: length 15
+  res.body.fewestCoins: contains 2
+  res.body.fewestCoins: contains 5
+  res.body.fewestCoins: contains 20
+  res.body.fewestCoins: contains 50
+  res.body.fewestCoins: contains 100
+}
+
+docs {
+  ### Large Target Values Test Case
+
+  This test case verifies the functionality of the change-making algorithm with a scenario involving **large target values**.
+
+  - **Input**: A list of coins `[1, 2, 5, 10, 20, 50, 100]` and a target amount of `999`.
+  - **Expected Output**: An array containing fifteen coins of values `2`, `2`, `5`, `20`, `20`, `50`, `100`, `100`, `100`, `100`, `100`, `100`, `100`, `100`, `100`, which is the fewest number of coins that sum up to the target amount.
+
+  The assertions in this test ensure that:
+
+  - The API response status is `200`
+  - The `Content-Type` header is `application/json`
+  - The response body is a valid JSON
+  - The 'fewestCoins' array in the response body is defined, has a length of `15`, and contains the coins of values `2`, `5`, `20`, `50`, and `100`.
+}
