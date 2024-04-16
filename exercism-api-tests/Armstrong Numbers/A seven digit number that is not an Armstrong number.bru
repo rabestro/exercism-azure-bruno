@@ -15,7 +15,6 @@ query {
 }
 
 assert {
-assert {
   res.status: eq 200
   res.headers['content-type']: contains application/json
   res.body: isJson
