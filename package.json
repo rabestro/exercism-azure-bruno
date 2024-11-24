@@ -4,7 +4,8 @@
   "description": "Bruno API tests for Azure functions",
   "main": "index.js",
   "scripts": {
-    "test": "cd exercism-api-tests && bru run --env azure --format junit --output ../report.xml",
+    "test-local": "cd exercism-api-tests && bru run --env azure",
+    "test-all": "cd exercism-api-tests && bru run --env azure --format junit --output ../report.xml",
     "change": "cd exercism-api-tests && bru run Change --env azure --format junit --output ../report.xml"
   },
   "keywords": [
@@ -13,10 +14,10 @@
     "tests",
     "exercism"
   ],
-  "author": "Jegors Čemisovs. <jegors_cemisovs@epam.com>",
+  "author": "Jegors Čemisovs. <jegors.cemisovs@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@usebruno/cli": "^1.11.0",
+    "@usebruno/cli": "^1.35.0",
     "xml2js": "^0.6.2",
     "xmldom": "^0.6.0",
     "xpath": "^0.0.34"
